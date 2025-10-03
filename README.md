@@ -1,3 +1,4 @@
+![Image](https://github.com/user-attachments/assets/3881e6b5-dc4e-4bd9-98f1-ca836022dce1)
 
 **CryptoConnect** is an educational, sandbox-style platform that lets students learn cryptocurrency trading without financial risk. Each student is issued fake money (test tokens) to simulate real trading—buying, selling, and tracking cryptocurrency prices in real-time (using public price APIs).  
 
