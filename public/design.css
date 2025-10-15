@@ -1,0 +1,70 @@
+h1{
+    text-align: center;
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+}
+
+body{
+    background-color: lightpink;
+}
+
+/*This is the code for the div container which is the content that has all the AI related things.*/
+.ai{
+    background-color: black;
+    position: absolute;
+    top : 0px;
+    left : calc(100% - 330px);
+    right: 0px;
+    height: 100%;
+    overflow: scroll;
+}
+
+
+.askgpt{
+    padding: 5px;
+    margin:auto;
+    display: block;
+    max-width: 300px;
+    width: 800px;
+    height:50px;
+    margin-top: 40px;
+    overflow: scroll;
+    padding-left: 10px;
+}
+
+.submitquest{
+    margin: auto;
+    display: block;
+    margin-top: 10px;
+}
+
+
+/*The below CSS is for the design of the response given by the AI. It contains the response(answers) made by the AI. */
+.response{
+    background-color: white;
+    overflow: scroll;
+    height:auto;
+    max-height:200px;
+    color:black;
+    width: 300px;
+    border-radius: 20px 20px 20px 0px; 
+    padding: 10px;
+    margin-left:1px;
+    margin-right:10px;
+}
+
+
+.user-question {
+    color: white;
+    background-color: #007bff;
+    text-align: right;
+    overflow-y: auto;
+    max-height: 200px;
+    width: fit-content;
+    max-width: 250px;
+    border-radius: 20px 20px 0 20px;
+    padding: 10px 14px;
+    margin: 8px 0 8px auto;           
+    word-wrap: break-word;
+}

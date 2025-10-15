@@ -1,0 +1,59 @@
+body{
+  background-image: url("login.png");
+}
+
+form {
+  width: 300px;   
+  margin: auto;
+  padding: 1rem;
+  border: 5px inset whitesmoke;
+}
+
+
+#title{
+  color:white;
+  font-size: 40px;
+  text-align: center;
+  margin-top: 20px;
+  padding-left: 30px;
+}
+
+.email{
+  margin-top: 10px;
+}
+
+.email,.password{
+  display:block;
+  width: 250px;
+  margin: auto;
+  padding: auto;
+  box-sizing: border-box;
+}
+
+.loginbtn, .submitbtn{
+  margin-left: 25%;
+  margin-bottom: 10px;
+}
+
+.visible{
+  margin:auto;
+  display: block;
+  height:200px;
+  width:200px;
+
+}
+
+
+footer {
+  width:100%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #222;
+  color: #ccc;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+

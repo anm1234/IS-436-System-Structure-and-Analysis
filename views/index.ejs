@@ -3,21 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "../design.css"></link>
+    <link rel = "stylesheet" href = "design.css"></link>
     <title>CrytoConenct</title>
 </head>
 <body>
 
-    <h1> CrytoConenct </h1>
+    <h1> CrytoConnect </h1>
 
-    <p> Group Members </p>
+    <nav>
+        <li>Currencies</li>
+        <li>Cr</li>
+    </nav>
 
-    <% for (let x = 0; x < 6; x++) { %>
-        <p><%= members[x] %></p>
-    <% } %>
+    <p> CryptoCurrencies</p>
+
+    <ol>
+        <% for (let key in locals.information) { %>
+            <li><%= key %> : <%= information[key] %></li>
+        <% } %>
+    </ol>
+
+
+
+    <div class="ai">
+        
+        <form id="askForm" method="post" action="/submitquest">
+            <input type="text" class="askgpt" name="askgpt" placeholder="Ask Broke AI">
+            <button class="submitquest" type="submit">Submit</button>
+        </form>
+        
+    </div>
 
     
 
-    <script src="../script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

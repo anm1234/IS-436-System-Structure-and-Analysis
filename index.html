@@ -1,16 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" id="prime">
+  <head>
+   
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "design.css"></link>
-    <title>IS 436 Group D</title>
-    <h1> Group D Project</h1>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>CrytoConnect</title>
+  </head>
 
-</head>
-<body>
+
+  <body>
+    <h1 id ="title"> CrytoConnect</h1>
+
+    <form id ="login" method="post" action="/login">
+
+      <input class="email" type="email" name="email" id="email" placeholder="Enter Email" required>
+      <br><br>
+      <input class="password" type="password" name="password" id="password" placeholder="Enter Password" required hidden>
+      <br><br>
+
+      <button class="loginbtn" type="submit">Login</button>
+      <button class= "submitbtn" type="submit">Signup</button>
     
+    </form>
 
-    <script src="script.js"></script>
-</body>
+    <img class = "loading"></img>
+
+    <script src="login.js"></script>
+    
+  </body>
+  
+  <footer id="foot">
+    © 2025-2026 CryptoConnect. All rights reserved.  
+    Unauthorized use or reproduction is prohibited.
+    
+  </footer>
 </html>
