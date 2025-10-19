@@ -36,18 +36,6 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 | Version Control | GitHub |
 | Development Process | Agile (Scrum) |
 
----
-
-## 🗂️ Database Schema
-
-**Main Tables**:
-
-- `users` – stores user accounts and credentials  
-- `wallets` – holds each user’s fake balance  
-- `holdings` – tracks owned crypto and quantities  
-- `transactions` – records buy/sell activities  
-
----
 
 ## 👥 Team D Roles
 
