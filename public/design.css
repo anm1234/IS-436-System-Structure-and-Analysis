@@ -68,3 +68,8 @@ body{
     margin: 8px 0 8px auto;           
     word-wrap: break-word;
 }
+
+
+.ol li{
+    border: 2px solid white;
+}

@@ -1,14 +1,3 @@
-window.onload = (event) => {
-    
-    history.pushState(null, null, location.href);
-
-
-    window.addEventListener('popstate', function () {
-       
-        history.pushState(null, null, location.href);
-    });
-};
-
 
 const form = document.getElementById("askForm");
 const respond = document.querySelector(".response");
