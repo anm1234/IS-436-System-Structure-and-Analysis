@@ -138,7 +138,7 @@ async function collect_crypto_data() {
   await fetch(url, {
     method: "GET",
     headers: {
-      "X-CMC_PRO_API_KEY": "07fc5637-02cd-469e-8ab4-772de36def10"
+      "X-CMC_PRO_API_KEY": process.env.CMC_KEY
     },
   })
     .then((response) => response.json())
