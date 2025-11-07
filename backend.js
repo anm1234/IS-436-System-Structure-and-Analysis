@@ -128,19 +128,6 @@ app.listen(port, () =>{
     console.log(`Server is live on port ${port}`);
 });
 
-async function gemini_call(questions){
-
-    const ai = new GoogleGenAI({});
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: questions,
-    });
-    console.log(response.text);
-    let mels  = response.text;
-
-    return mels;
-}
-
 async function collect_crypto_data() {
   const url =
     "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=XRP,BTC,SOL,ETH,ADA,BNB,DOGE,SHIB,LTC,LINK,USDT,USDC,BUSD,DOT";
