@@ -1,3 +1,8 @@
+window.onload = function() {
+  history.pushState(null, null, window.location.href);
+  history.back();
+  window.onpopstate = () => history.forward();
+};
 
 const form = document.getElementById("askForm");
 const respond = document.querySelector(".response");

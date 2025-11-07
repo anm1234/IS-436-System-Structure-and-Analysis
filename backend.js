@@ -2,11 +2,13 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
-import OpenAI from "openai";
+import session from "express-session";
 import { createClient } from '@supabase/supabase-js'
+import 'dotenv/config'; 
 
 
-const supabase = createClient('https://vsqzovvkryycokndxakm.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzcXpvdnZrcnl5Y29rbmR4YWttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEzNTMyNDEsImV4cCI6MjA3NjkyOTI0MX0.xFfrxMPbWBwyuNHjJQjF4X6IujTpy5HJSUeWplFlt3U');
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,18 +22,21 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.json());
 
 
-
-app.listen(port, () =>{
-    console.log(`Server is live on port ${port}`);
-});
+app.use(session({
+  secret: "mysecretkey",
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.get("/", (req,res)=>{
     res.sendFile( __dirname +"/index.html");
+    console.log(req.session.user);
 })
 
 app.get("/index", async (req, res) => {
-    let information = await collect_crypto_data();
-    res.render("index.ejs", { information });
+    //let information = await collect_crypto_data();
+    res.render("index.ejs");
+    console.log(req.session);
 });
 
 
@@ -40,13 +45,30 @@ app.post("/login", async (req, res) => {
     const user_pass = req.body.user_pass;
 
     const verified = await verifier(user_email, user_pass);
+    console.log(`Verfied: ${verified}`)
+    console.log(req.session.user);
 
     if (verified) {
+        req.session.user = verified;
         res.json({ value: verified, redirect: "/index" });
     } else {
         res.json({value: verified });
     }
 });
+
+app.post("/signup", async (req,res) =>{
+
+  let storage = req.body;
+  console.log(storage.registration);
+  let status = await register(storage);
+
+  if (status){
+    res.json({'values': true})
+  }else{
+    res.json({"values": false})
+  }
+
+})
 
 app.post("/submitquest", async (req,res) =>{
     let question = req.body.askgpt;
@@ -56,17 +78,63 @@ app.post("/submitquest", async (req,res) =>{
 
 })
 
-async function gemini_call(questions){
-    let made =`Your name is Cryptobot and your main purpose is to support Cryptoconnect user. If you are asked who made you, reply with a group of IS-436 Engineers namely Abel, Sahil, and Eman or things related to your production the engineers are this people so reply with that
-    Unless you are asked questions realted to who made you you dont have to reply with that. NOTE dont say If asked who made me, I will reply with "a group of IS-436 Engineers namely Abel, Sahil, and Eman." I will only provide this information when specifically asked about my creators
-     we dont want to show you were told that.`
-    
-     const client = new OpenAI({ apiKey: "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" }); 
-    const response = await client.responses.create({
-        model: "gpt-5",
-        input: questions + made,
-    });
+app.get("/profile",(req,res)=>{
+  const session_exist = session_checker(req);
+  if (session_exist){
+    res.render("profile.ejs",{user_info:req.session.user[0]});
+    console.log("Switched to the profile navigation");
+    console.log(req.session.user[0]);
+  }else{
+    res.sendFile( __dirname +"/index.html");
+  }
+})
 
+app.get("/dashboard", (req,res)=>{
+  const session_exist = session_checker(req);
+  if (session_exist){
+    res.render("index.ejs");
+  }else{
+    res.sendFile( __dirname +"/index.html");
+  }
+})
+
+app.get("/trade", (req,res)=>{
+  const session_exist = session_checker(req);
+  if (session_exist){
+    let trading_options = collect_crypto_data();
+    res.render("trade.ejs",{trading_options});
+  }else{
+    res.sendFile( __dirname +"/index.html");
+  }
+})
+
+app.get("/portfolio",(req,res)=>{
+  const session_exist = session_checker(req);
+  if (session_exist){
+    res.render("portfolio.ejs");
+  }else{
+    res.sendFile( __dirname +"/index.html");
+  }
+})
+
+app.get("/logout", (req,res)=>{
+  delete req.session.user;
+  console.log("User logged out session is:");
+  console.log(req.session.user);
+  res.sendFile( __dirname +"/index.html");
+})
+
+app.listen(port, () =>{
+    console.log(`Server is live on port ${port}`);
+});
+
+async function gemini_call(questions){
+
+    const ai = new GoogleGenAI({});
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: questions,
+    });
     console.log(response.text);
     let mels  = response.text;
 
@@ -117,20 +185,59 @@ async function verifier(user_email, user_password){
   if (supabase) {
     const { data, error } = await supabase
     .from('users')
-    .select('password,fname,balance')
+    .select('id,password,fname,balance,lname,email')
     .eq('email', user_email);
     console.log(data);
 
     if (data.length > 0 && data[0].password === user_password){
       console.log("matched");
-      checker = true;
+      return data;
     } else {
       checker = false;
+      return checker;
     }
+  }
+}
+
+
+async function register(storage){
+  let checker = false;
+
+  if (supabase) {
+    const { data, error } = await supabase
+    .from('users')
+    .insert({
+      'email':storage.registration.email,
+      'password': storage.registration.password,
+      'fname' : storage.registration.fname,
+      'lname' : storage.registration.lname,
+      'balance' : 500
+     });
+    console.log(data);
+
+    if(error){
+      checker = false;
+      console.log(error);
+    }else{
+      checker = true;
+    }
+
+    console.log(checker);
   }
 
   return checker;
 }
+
+function session_checker(request){
+  if(request.session.user){
+    return true;
+  }else{
+    return false;
+  }
+
+}
+
+
 
 
 

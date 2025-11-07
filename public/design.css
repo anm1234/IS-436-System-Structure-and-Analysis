@@ -1,6 +1,6 @@
 h1{
     text-align: center;
-    color: black;
+    color: silver;
     font-family: 'Times New Roman', Times, serif;
     font-weight: bolder;
 }
@@ -18,6 +18,7 @@ body{
     right: 0px;
     height: 100%;
     overflow: scroll;
+    display: none;
 }
 
 
@@ -73,3 +74,241 @@ body{
 .ol li{
     border: 2px solid white;
 }
+
+.navbar .nav-links{
+    display: flex;
+}
+
+.navbar .nav-links li{
+    display: block;
+    margin: 10px;
+    text-decoration: none;
+    flex: 1;
+}
+
+.navbar .nav-links li a{
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+/* CSS for the PROFILE page.*/
+
+body{
+    background-color: black;
+}
+
+.navbar{
+    margin-top:40px;
+}
+
+
+.user-profile{
+    text-align: center;
+    margin-top: 30px;
+    color: gold;
+}
+
+.user-profile-animation{
+    height: 250px;
+    width:250px;
+    display: block;
+    margin:auto;
+    padding-top: 15px;
+}
+
+.user-profile-name{
+    text-align: center;
+    color: gold;
+    margin-top: 20px;
+
+}
+
+.user-profile-email{
+    text-align: center;
+    color: gold;
+}
+
+.user-profile-id{
+    text-align: center;
+    color: gold;
+}
+
+hr{
+    margin-top: 30px;
+    padding-top: 10px;
+    background-color: #B0B0B0;
+}
+
+
+
+/* CSS for the Trade pag.*/
+.trading {
+    width: 400px;
+    margin: 0 auto; /* centers horizontally */
+    text-align: center;
+    border: 5px solid silver;
+    border-radius: 10px;
+    padding: 20px;
+}
+.trading .trading-balance{
+    background-color: green;
+    width:40px;
+    margin-left:90%;
+    margin-top: 0px;;
+}
+
+
+.trading-options button {
+    display: inline-flex;
+    gap: 30px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.trading-buy {
+    background-color: #00c896;
+    color: black;
+}
+
+.trading-sell {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+
+
+
+/* Optional: style inputs and select */
+.trading select,
+.trading input{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid silver;
+    width: 200px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+
+.trading-value{
+    color: whitesmoke;
+}
+
+/* Button styling */
+.trading-submit {
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    transition: background 0.3s;
+    width: 50px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.trading-submit:hover {
+    background-color: red;
+    font-weight: bold;
+}
+
+
+/*CSS for the portfolio page*/
+/* === PORTFOLIO PAGE SPECIFIC STYLES === */
+
+.portfolio {
+  width: 85%;
+  margin: 40px auto;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+/* Summary section */
+.portfolio-summary {
+  background: linear-gradient(135deg, #101820, #1b2735);
+  padding: 20px 40px;
+  border-radius: 15px;
+  display: inline-block;
+  text-align: left;
+  margin-bottom: 30px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.portfolio-summary h2 {
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.portfolio-summary .balance {
+  color: #4caf50;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Holdings table */
+.portfolio-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #151515;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.portfolio-table th, .portfolio-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #222;
+}
+
+.portfolio-table th {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: #aaa;
+  background-color: #1d1d1d;
+}
+
+.portfolio-table td {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+/* Coin icon */
+.coin-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Value colors */
+.positive { color: #4caf50; }
+.negative { color: #f44336; }
+
+/* Buttons for manage/withdraw/trade actions */
+.portfolio-actions {
+  margin-top: 25px;
+}
+
+.portfolio-actions button {
+  background-color: #0077ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.portfolio-actions button:hover {
+  background-color: #005ecc;
+  transform: translateY(-2px);
+}
+
+

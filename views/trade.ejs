@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "design.css"></link>
+    <title>CryptoConnect/Trade</title>
+</head>
+<body>
+    <h1>CryptoConnect</h1>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="/dashboard">Cryptoconnect</a></li>
+            <li><a href="/index">Dashboard</a></li>
+            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="/trade">Trade</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1>Let's Trade</h1>
+    <form  class="trading" action ="/submittrade" method="post">
+        <div class="trading-balance">$</div>
+        <div class="trading-options">
+            <button class="trading-buy">Buy</button>
+            <button class="trading-sell">Sell</button>
+        </div>
+        <select>
+            <option selected></option>
+            <option value="BTC">BTC</option>
+            <option value="ETH">ETH</option>
+            <option value="XRP">XRP</li>
+        </select>
+        <br>
+        <input type="number" class="trading-amount" placeholder="Enter the amount">
+         <input type="number" placeholder="Current Price">
+         <p class="trading-value">Total Value: </p>
+
+        <submit class="trading-submit">Submit</submit>
+
+    </form>
+    <script src="script.js"></script>
+    
+</body>
+</html>
