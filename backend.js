@@ -208,7 +208,6 @@ async function register(storage){
     }else{
       checker = true;
     }
-
     console.log(checker);
   }
 
