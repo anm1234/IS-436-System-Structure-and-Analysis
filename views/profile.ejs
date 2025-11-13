@@ -21,14 +21,15 @@
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
+    <hr>
 
 
     <h1 class ="user-profile"> User Profile</h1>
     <img class ="user-profile-animation" src="https://avatar.iran.liara.run/public/11">
     <hr>
-    <p class="user-profile-name"><%= user_info.fname %></p>
+    <p class="user-profile-name"><%= user_info.fname%> <%=user_info.lname %></p>
     <hr>
-    <p class ="user-profile-email">Email Adress of the person</p>
+    <p class ="user-profile-email"><%= user_info.email %></p>
     <hr>
     <p class="user-profile-id" >ID number <%= user_info.id %></p>
     <hr>

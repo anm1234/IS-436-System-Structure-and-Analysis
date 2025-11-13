@@ -1,71 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Portfolio | CryptoConnect</title>
-    <link rel="stylesheet" href="/design.css" />
-  </head>
-  <body>
-   
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel = "stylesheet" href = "design.css"></link>
+  <title>CryptoConnect</title>
+</head>
+<body>
+  
+    <h1>CryptoConnect</h1>
+    <hr>
     <nav class="navbar">
-      <div class="logo">💠 CryptoConnect</div>
-      <ul class="nav-links">
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/portfolio" class="active">Portfolio</a></li>
-        <li><a href="/trade">Trade</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <ul class="nav-links">
+            <li><a href="/dashboard">Cryptoconnect</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="/trade">Trade</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <hr>
+
+    <h1><%=locals.name%>My Porfolio</h1>
+    
+    <nav class="portfolio-bar">
+      <ul class="portfolio-bar-list">
+        <li>Coin</li> 
+        <li>Quantity</li> 
+        <li>Current </li>
+        <li>Total Value</li>
+        <li>P/L (%)</li>
       </ul>
     </nav>
-
-    <!-- --- Main Portfolio Section --- -->
-    <main class="portfolio-container">
-      <h1>My Holdings</h1>
-
-      <!-- Balance Card -->
-      <div class="balance-card">
-        <h2>Total Portfolio Value</h2>
-        <p class="balance">$<%= locals.total_value ? locals.total_value.toFixed(2) : '0.00' %></p>
-        <p class="coins">You hold <%= locals.total_coins ? locals.total_coins : 0 %> coins</p>
-      </div>
-
-      <!-- Holdings Table -->
-      <% if (locals.holdings && locals.holdings.length > 0) { %>
-        <table class="holdings-table">
-          <thead>
-            <tr>
-              <th>Coin</th>
-              <th>Amount</th>
-              <th>Current Price</th>
-              <th>Total Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% locals.holdings.forEach(coin => { %>
-              <tr>
-                <td>
-                  <img src="<%= coin.icon %>" class="coin-icon" alt="<%= coin.symbol %>" />
-                  <%= coin.name %> (<%= coin.symbol %>)
-                </td>
-                <td><%= coin.amount %></td>
-                <td>$<%= coin.price.toFixed(2) %></td>
-                <td>$<%= (coin.amount * coin.price).toFixed(2) %></td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      <% } else { %>
-        <p class="no-holdings">You don’t have any coins yet. Start trading to build your portfolio!</p>
-      <% } %>
-    </main>
-
-    <!-- --- Footer --- -->
-    <footer id="foot">
-      © 2025-2026 CryptoConnect. All rights reserved.
-    </footer>
-
-    <script src="script.js"></script>
-  </body>
+  
+</body>
 </html>
-
