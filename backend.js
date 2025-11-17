@@ -6,8 +6,6 @@ import session from "express-session";
 import { createClient } from '@supabase/supabase-js'
 import 'dotenv/config'; 
 
-
-
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 
@@ -101,6 +99,7 @@ app.get("/trade", (req,res)=>{
   const session_exist = session_checker(req);
   if (session_exist){
     let trading_options = collect_crypto_data();
+    console.log(trading_options.BTC);
     res.render("trade.ejs",{trading_options});
   }else{
     res.sendFile( __dirname +"/index.html");
@@ -112,6 +111,7 @@ app.get("/portfolio",(req,res)=>{
   if (session_exist){
     console.log(`Switched to Protfolio`);
     const holding_info = req.session.user.holding;
+    console.log(holding_info);
     res.render("portfolio.ejs",{holding_info});
   }else{
     res.sendFile( __dirname +"/index.html");

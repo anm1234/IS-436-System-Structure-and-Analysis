@@ -1,3 +1,123 @@
+// 1. Select all price elements
+const prices = {
+  "BTC-USD": document.querySelector(".BTC-price"),
+  "ETH-USD": document.querySelector(".ETH-price"),
+  "BNB-USD": document.querySelector(".BNB-price"),
+  "ADA-USD": document.querySelector(".ADA-price"),
+  "SOL-USD": document.querySelector(".SOL-price"),
+  "XRP-USD": document.querySelector(".XRP-price"),
+  "DOT-USD": document.querySelector(".DOT-price"),
+  "DOGE-USD": document.querySelector(".DOGE-price"),
+  "SHIB-USD": document.querySelector(".SHIB-price"),
+  "USDT-USD": document.querySelector(".USDT-price")
+};
+
+// 2. Select all volume elements
+const volume = {
+  "BTC-USD": document.querySelector(".BTC-vol"),
+  "ETH-USD": document.querySelector(".ETH-vol"),
+  "BNB-USD": document.querySelector(".BNB-vol"),
+  "ADA-USD": document.querySelector(".ADA-vol"),
+  "SOL-USD": document.querySelector(".SOL-vol"),
+  "XRP-USD": document.querySelector(".XRP-vol"),
+  "DOT-USD": document.querySelector(".DOT-vol"),
+  "DOGE-USD": document.querySelector(".DOGE-vol"),
+  "SHIB-USD": document.querySelector(".SHIB-vol"),
+  "USDT-USD": document.querySelector(".USDT-vol")
+};
+
+// 3. Store latest values
+let latestPrices = {
+  "BTC-USD": null,
+  "ETH-USD": null,
+  "BNB-USD": null,
+  "ADA-USD": null,
+  "SOL-USD": null,
+  "XRP-USD": null,
+  "DOT-USD": null,
+  "DOGE-USD": null,
+  "SHIB-USD": null,
+  "USDT-USD": null
+};
+
+let latestVolume = {
+  "BTC-USD": null,
+  "ETH-USD": null,
+  "BNB-USD": null,
+  "ADA-USD": null,
+  "SOL-USD": null,
+  "XRP-USD": null,
+  "DOT-USD": null,
+  "DOGE-USD": null,
+  "SHIB-USD": null,
+  "USDT-USD": null
+};
+
+// 4. WebSocket connection
+const ws = new WebSocket("wss://ws-feed.exchange.coinbase.com");
+
+ws.onopen = () => {
+  ws.send(JSON.stringify({
+    type: "subscribe",
+    channels: [
+      { name: "ticker", product_ids: Object.keys(latestPrices) }
+    ]
+  }));
+};
+
+// 5. Update live values from WebSocket
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+
+  if (data.type === "ticker" && data.product_id in latestPrices) {
+    latestPrices[data.product_id] = data.price;
+    latestVolume[data.product_id] = data.volume_24h;
+  }
+};
+
+// 6. One interval for updating ALL UI
+setInterval(() => {
+
+  // A. Update homepage: prices & volumes
+  for (const productId in latestPrices) {
+
+    // Update price
+    const priceValue = latestPrices[productId];
+    if (priceValue) {
+      const priceElement = prices[productId];
+      if (priceElement) {
+        priceElement.innerHTML = "$" + Number(priceValue).toFixed(6);
+      }
+    }
+
+    // Update volume
+    const volumeValue = latestVolume[productId];
+    if (volumeValue) {
+      const volumeElement = volume[productId];
+      if (volumeElement) {
+        volumeElement.innerHTML = Number(volumeValue).toLocaleString();
+      }
+    }
+  }
+
+  // B. Update portfolio page prices
+  for (const symbol in symbolMap) {
+    const productId = symbolMap[symbol];  // e.g., "BTC-USD"
+    const currentPrice = latestPrices[productId];
+
+    if (!currentPrice) continue;
+
+    const portfolioElement = document.querySelector(".holding-price-" + symbol);
+
+    if (portfolioElement) {
+      portfolioElement.innerHTML = "$" + Number(currentPrice).toFixed(6);
+    }
+  }
+
+}, 100);  // refresh rate 10 times/sec
+
+
+
 window.onload = function() {
   history.pushState(null, null, window.location.href);
   history.back();
@@ -41,5 +161,4 @@ form.addEventListener("submit", function(event) {
         responding.innerHTML = "Error fetching response";
     });
 });
-
 

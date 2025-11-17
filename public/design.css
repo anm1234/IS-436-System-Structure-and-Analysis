@@ -230,3 +230,67 @@ hr{
     flex: 1;
     color:white;
 }
+
+.portfolio-holding{
+    margin-top: 20px;
+}
+
+.portfolio-bar-list,
+.portfolio-holding-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.portfolio-bar-list li,
+.portfolio-holding-list li {
+    flex: 1;
+    margin: 15px;
+    color: white;
+}
+
+
+/*CSS for the dashboard or the inde.ejs file */
+
+.dashboard .dashboard-list{
+    display: flex;
+    margin-left: 150px;
+}
+
+.dashboard .dashboard-list li{
+    display: block;
+    margin: 10px;
+    text-decoration: none;
+    flex: 1;
+    color:white;
+}
+
+
+.dashboard-currencies {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;              /* space between rows */
+    width: 100%;
+}
+
+/* Each coin row */
+.dashboard-currencies ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    list-style: none;
+    padding: 12px 18px;
+    margin: 0;
+
+    background: #1a1a1a;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+}
+
+.dashboard-currencies ul li {
+    flex: 1;               /* equal width columns */
+    text-align: center;    /* align text */
+}

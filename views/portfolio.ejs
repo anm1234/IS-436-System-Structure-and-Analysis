@@ -22,17 +22,39 @@
     </nav>
     <hr>
 
-    <h1><%=locals.name%>My Porfolio</h1>
+    <h1>My Porfolio</h1>
     
     <nav class="portfolio-bar">
       <ul class="portfolio-bar-list">
         <li>Coin</li> 
         <li>Quantity</li> 
-        <li>Current </li>
+        <li>Current Price </li>
         <li>Total Value</li>
         <li>P/L (%)</li>
       </ul>
     </nav>
+    
+    <nav class="portfolio-holding">
+      <% if (locals.holding_info && locals.holding_info.length > 0) { %>
+        <% for (let i = 0; i < locals.holding_info.length; i++) { %>
+          <ul class="portfolio-holding-list">
+            <li><%= locals.holding_info[i].asset_name %></li>
+            <li><%= locals.holding_info[i].asset_amount %></li>
+            <li>--</li> <!-- placeholder for current price -->
+            <li>--</li> <!-- placeholder for total value -->
+            <li>--</li> <!-- placeholder for P/L -->
+          </ul>
+        <% } %>
+      <% } %>
+    </nav>
+
+
+
+
+
+
+    
+
   
 </body>
 </html>
