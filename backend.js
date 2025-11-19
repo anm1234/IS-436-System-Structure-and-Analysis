@@ -6,8 +6,6 @@ import session from "express-session";
 import { createClient } from '@supabase/supabase-js'
 import 'dotenv/config'; 
 
-
-
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 
@@ -41,19 +39,19 @@ app.get("/index", async (req, res) => {
 
 
 app.post("/login", async (req, res) => {
-    const user_email = req.body.user_email;
-    const user_pass = req.body.user_pass;
+  const user_email = req.body.user_email;
+  const user_pass = req.body.user_pass;
 
-    const verified = await verifier(user_email, user_pass);
-    console.log(`Verfied: ${verified}`)
-    console.log(req.session.user);
-
-    if (verified) {
-        req.session.user = verified;
-        res.json({ value: verified, redirect: "/index" });
-    } else {
-        res.json({value: verified });
-    }
+  const verified = await verifier(user_email, user_pass);
+  console.log(`Verfied: ${verified}`);
+  
+  if (verified) {
+    req.session.user = verified;
+    res.json({ value: verified, redirect: "/index" });
+  
+  } else {
+    res.json({value: verified });
+  }
 });
 
 app.post("/signup", async (req,res) =>{
@@ -81,9 +79,8 @@ app.post("/submitquest", async (req,res) =>{
 app.get("/profile",(req,res)=>{
   const session_exist = session_checker(req);
   if (session_exist){
-    res.render("profile.ejs",{user_info:req.session.user[0]});
+    res.render("profile.ejs",{user_info:req.session.user.data[0]});
     console.log("Switched to the profile navigation");
-    console.log(req.session.user[0]);
   }else{
     res.sendFile( __dirname +"/index.html");
   }
@@ -102,6 +99,7 @@ app.get("/trade", (req,res)=>{
   const session_exist = session_checker(req);
   if (session_exist){
     let trading_options = collect_crypto_data();
+    console.log(trading_options.BTC);
     res.render("trade.ejs",{trading_options});
   }else{
     res.sendFile( __dirname +"/index.html");
@@ -111,7 +109,10 @@ app.get("/trade", (req,res)=>{
 app.get("/portfolio",(req,res)=>{
   const session_exist = session_checker(req);
   if (session_exist){
-    res.render("portfolio.ejs");
+    console.log(`Switched to Protfolio`);
+    const holding_info = req.session.user.holding;
+    console.log(holding_info);
+    res.render("portfolio.ejs",{holding_info});
   }else{
     res.sendFile( __dirname +"/index.html");
   }
@@ -167,6 +168,8 @@ async function collect_crypto_data() {
 
 async function verifier(user_email, user_password){
 
+  let content;
+
   let checker = false;
 
   if (supabase) {
@@ -178,7 +181,10 @@ async function verifier(user_email, user_password){
 
     if (data.length > 0 && data[0].password === user_password){
       console.log("matched");
-      return data;
+      console.log(data[0].id)
+      const holding = await user_asset(data[0].id)
+      content = {data,holding}
+      return content;
     } else {
       checker = false;
       return checker;
@@ -221,6 +227,19 @@ function session_checker(request){
     return false;
   }
 
+}
+
+async function user_asset(id){
+  if (supabase){
+    const {data, error } = await supabase
+    .from('Holding')
+    .select('asset_amount, asset_name')
+    .eq('user_id',id);
+
+    return data;
+  }else{
+    console.log(`Unable to retrive data for use`)
+  }
 }
 
 
