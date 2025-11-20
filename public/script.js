@@ -1,3 +1,50 @@
+window.onload = function() {
+  history.pushState(null, null, window.location.href);
+  history.back();
+  window.onpopstate = () => history.forward();
+};
+
+const form = document.getElementById("askForm");
+const respond = document.querySelector(".response");
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const question = form.askgpt.value;
+
+    const parent = document.querySelector(".ai")
+
+    const responding = document.createElement("p");
+    const userask = document.createElement("p");
+
+    userask.classList.add("user-question");
+    responding.classList.add("response");
+    responding.textContent = "Thinking... 🤔";
+
+
+    userask.innerHTML = question; 
+    parent.appendChild(userask);
+    parent.appendChild(responding);
+
+    fetch("/submitquest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ askgpt: question })
+    })
+    .then(res => res.json())
+    .then(data => {
+        responding.innerHTML = "AI response: " + data.answer;
+        form.reset();
+    })
+    .catch(err => {
+        console.error(err);
+        responding.innerHTML = "Error fetching response";
+    });
+});
+
+
+
+
 // 1. Select all price elements
 const prices = {
   "BTC-USD": document.querySelector(".BTC-price"),
@@ -146,62 +193,4 @@ dropdown.addEventListener("change", updateTradeValue);
 
 // When amount changes (typing, input, paste)
 amountInput.addEventListener("input", updateTradeValue);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.onload = function() {
-  history.pushState(null, null, window.location.href);
-  history.back();
-  window.onpopstate = () => history.forward();
-};
-
-const form = document.getElementById("askForm");
-const respond = document.querySelector(".response");
-
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const question = form.askgpt.value;
-
-    const parent = document.querySelector(".ai")
-
-    const responding = document.createElement("p");
-    const userask = document.createElement("p");
-
-    userask.classList.add("user-question");
-    responding.classList.add("response");
-    responding.textContent = "Thinking... 🤔";
-
-
-    userask.innerHTML = question; 
-    parent.appendChild(userask);
-    parent.appendChild(responding);
-
-    fetch("/submitquest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ askgpt: question })
-    })
-    .then(res => res.json())
-    .then(data => {
-        responding.innerHTML = "AI response: " + data.answer;
-        form.reset();
-    })
-    .catch(err => {
-        console.error(err);
-        responding.innerHTML = "Error fetching response";
-    });
-});
 

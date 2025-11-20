@@ -98,8 +98,9 @@ app.get("/dashboard", (req,res)=>{
 app.get("/trade", (req,res)=>{
   const session_exist = session_checker(req);
   if (session_exist){
-    let trading_options = collect_crypto_data();
-    console.log(trading_options.BTC);
+    //let trading_options = collect_crypto_data();
+    let trading_options = req.session.user.data[0];
+    console.log(trading_options);
     res.render("trade.ejs",{trading_options});
   }else{
     res.sendFile( __dirname +"/index.html");
