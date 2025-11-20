@@ -118,6 +118,49 @@ setInterval(() => {
 
 
 
+
+//Script for the Trade.ejs file is below
+
+const dropdown = document.querySelector(".selection");
+const amountInput = document.querySelector(".trading-amount");
+const priceInput = document.querySelector(".trading-price");
+const valueDisplay = document.querySelector(".trading-value");
+
+// Reusable calculation function
+function updateTradeValue() {
+    const selected = dropdown.value;
+    const currentPrice = latestPrices[selected] || 0;
+
+    // Update price field
+    priceInput.value = currentPrice;
+
+    // Calculate total
+    const amount = Number(amountInput.value);
+    const totalValue = amount * currentPrice;
+
+    valueDisplay.innerHTML = `Total Value: ${totalValue}`;
+}
+
+// When dropdown changes
+dropdown.addEventListener("change", updateTradeValue);
+
+// When amount changes (typing, input, paste)
+amountInput.addEventListener("input", updateTradeValue);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 window.onload = function() {
   history.pushState(null, null, window.location.href);
   history.back();
