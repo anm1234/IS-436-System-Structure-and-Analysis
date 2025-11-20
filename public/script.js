@@ -43,8 +43,6 @@ form.addEventListener("submit", function(event) {
 });
 
 
-
-
 // 1. Select all price elements
 const prices = {
   "BTC-USD": document.querySelector(".BTC-price"),
@@ -176,7 +174,7 @@ const valueDisplay = document.querySelector(".trading-value");
 // Reusable calculation function
 function updateTradeValue() {
     const selected = dropdown.value;
-    const currentPrice = latestPrices[selected] || 0;
+    const currentPrice = latestPrices[selected];
 
     // Update price field
     priceInput.value = currentPrice;
@@ -185,7 +183,7 @@ function updateTradeValue() {
     const amount = Number(amountInput.value);
     const totalValue = amount * currentPrice;
 
-    valueDisplay.innerHTML = `Total Value: ${totalValue}`;
+    valueDisplay.innerHTML = `${totalValue}`;
 }
 
 // When dropdown changes
