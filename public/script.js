@@ -3,6 +3,8 @@ window.onload = function() {
   history.back();
   window.onpopstate = () => history.forward();
 };
+// Script for the AI support chatbot
+
 
 const form = document.getElementById("askForm");
 const respond = document.querySelector(".response");
@@ -43,6 +45,13 @@ form.addEventListener("submit", function(event) {
 });
 
 
+
+
+
+//Script for the Websocket and update of prices.
+
+
+
 // 1. Select all price elements
 const prices = {
   "BTC-USD": document.querySelector(".BTC-price"),
@@ -72,7 +81,7 @@ const volume = {
 };
 
 // 3. Store latest values
-let latestPrices = {
+var latestPrices = {
   "BTC-USD": null,
   "ETH-USD": null,
   "BNB-USD": null,
@@ -160,35 +169,4 @@ setInterval(() => {
   }
 
 }, 100);  // refresh rate 10 times/sec
-
-
-
-
-//Script for the Trade.ejs file is below
-
-const dropdown = document.querySelector(".selection");
-const amountInput = document.querySelector(".trading-amount");
-const priceInput = document.querySelector(".trading-price");
-const valueDisplay = document.querySelector(".trading-value");
-
-// Reusable calculation function
-function updateTradeValue() {
-    const selected = dropdown.value;
-    const currentPrice = latestPrices[selected];
-
-    // Update price field
-    priceInput.value = currentPrice;
-
-    // Calculate total
-    const amount = Number(amountInput.value);
-    const totalValue = amount * currentPrice;
-
-    valueDisplay.innerHTML = `${totalValue}`;
-}
-
-// When dropdown changes
-dropdown.addEventListener("change", updateTradeValue);
-
-// When amount changes (typing, input, paste)
-amountInput.addEventListener("input", updateTradeValue);
 
