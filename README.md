@@ -64,6 +64,7 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 ---
 
 ```mermaid
+%%{init: {'themeVariables': { 'pie1': '#00FF00', 'pie2': '#FFD700', 'pie3': '#FF0000'}}}%%
 pie showData
     title Project Progress
     "Completed (85%)" : 85
