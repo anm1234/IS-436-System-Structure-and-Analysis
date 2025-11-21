@@ -63,18 +63,20 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 
 ---
 
-```mermaid
-%%{init: {'theme': 'default', 'themeVariables': {
-    'pie1': '#FFC4C4',   /* Gold Yellow */
-    'pie2': '#2C3AF7',   /* Crypto Blue */
-    'pie3': '#DB0909'    /* Alert Red */
-}}}%%
+%%{init: {
+  "theme": "default",
+  "themeVariables": {
+    "pie1": "#FFC4C4",
+    "pie2": "#2C3AF7",
+    "pie3": "#DB0909"
+  }
+}}%%
 pie showData
     title Project Progress
     "Completed (85%)" : 85
     "Balance Verification & Update (10%)" : 10
     "Security Enhancement & Frontend Changes (5%)" : 5
-```
+
 ---
 
 ## 🚀 Setup & Run
