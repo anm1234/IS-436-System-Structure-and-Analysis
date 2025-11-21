@@ -1,3 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+  </head>
+    <body>
+
+      <div class="access-options">
+        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+        <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Signup</button>
+      </div>
+      <p class="status"></p>
+      <img class="loading" style="display:none; width:60px;">
+
+      <div id="id01" class="modal">
+        
+        <form class="modal-content animate" action="/login" method="post">
+          <div class="imgcontainer">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <img src="https://avatar.iran.liara.run/public/11" alt="Avatar" class="avatar">
+          </div>
+
+          <div class="container">
+            <label for="user_email"><b>User Email</b></label>
+            <input type="text" placeholder="Enter Username" name="user_email" required>
+
+            <label for="user_pass"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="user_pass" required>
+              
+            <button type="submit">Login</button>
+          </div>
+
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+          </div>
+        </form>
+      </div>
+
+
+      <div id="id02" class="modal">
+        
+        <form class="modal-content animate" action="/signup" method="post">
+          <div class="imgcontainer">
+            <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <img src="https://avatar.iran.liara.run/public/11" alt="Avatar" class="avatar">
+          </div>
+
+          <div class="container">
+
+            <label for="fname"><b>Firstname</b></label>
+            <input type="text" placeholder="Enter Firstname" name="fname" required>
+
+            <label for="lname"><b>Lastname</b></label>
+            <input type="text" placeholder="Enter Lastname" name="lname" required>
+
+            <label for="email"><b>Email Address</b></label>
+            <input type="email" placeholder="Enter Email Address" name="email" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+              
+            <button type="submit">Signup</button>
+          </div>
+
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+          </div>
+        </form>
+      </div>
+
+      <script src="login.js">
+
+        var modal = document.getElementById('id01');
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+      </script>
+
+  </body>
+
+   <footer id="foot">
+      © 2025-2026 CryptoConnect. All rights reserved.  
+      Unauthorized use or reproduction is prohibited. 
+  </footer>
+
+</html>
+
+
+
+
+<!--
 <!DOCTYPE html>
 <html lang="en" id="prime">
   <head>
@@ -11,17 +110,9 @@
 
   <body>
     <h1 id ="title"> CrytoConnect</h1>
-
-    <form id ="login" method="post" action="/login">
-
-      <input class="email" type="email" name="email" id="email" placeholder="Enter Email" required>
-      <br><br>
-      <input class="password" type="password" name="password" id="password" placeholder="Enter Password" required hidden>
-      <p class="status"></p>
-
-      <button class="loginbtn" name="login" value="login" type="submit">Login</button>
-      <button class= "submitbtn" type="button">Signup</button>
-    
+    <form class="access">
+      <button class="displaylogin" method="post" action="/login">login</button>
+      <button class="displysignup" method="post" action="login">Signup</button>
     </form>
 
     <img class = "loading"></img>
@@ -36,3 +127,5 @@
     
   </footer>
 </html>
+
+-->

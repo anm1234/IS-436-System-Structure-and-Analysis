@@ -1,92 +1,83 @@
-const loginForm = document.querySelector("#login"); // the form
+
+const loginForm  = document.querySelector("#id01 .modal-content");
+const signupForm = document.querySelector("#id02 .modal-content");
 const loadingImg = document.querySelector(".loading");
-const signup = document.querySelector(".submitbtn");
+const statusMsg  = document.querySelector(".status");
 
-let input_email = document.querySelector(".email");
-let decision = document.querySelector(".status");
-let decision_pass = document.querySelector(".password");
 
-window.onload = function() {
-  history.pushState(null, null, window.location.href);
-  history.back();
-  window.onpopstate = () => history.forward();
+window.onload = function () {
+    history.pushState(null, null, window.location.href);
+    history.back();
+    window.onpopstate = () => history.forward();
 };
 
-loginForm.addEventListener("submit", async(e) => {
+
+loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const user_email = document.querySelector(".email").value;
-    const user_password = document.querySelector(".password").value;
 
-    loadingImg.src = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2FscmN3eGZ1ZTUwMDk5czJ1bTNqNHMxN25pNDYxdjkwMHozN3djNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7bu3XilJ5BOiSGic/giphy.gif";
-    loadingImg.classList.add("visible");
+    const user_email = loginForm.querySelector("input[name='user_email']").value;
+    const user_pass  = loginForm.querySelector("input[name='user_pass']").value;
 
-    setTimeout(() => {
-        loadingImg.style.display = "none"
-    }, 2000);
+    loadingImg.src =
+      "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2FscmN3eGZ1ZTUwMDk5czJ1bTNqNHMxN25pNDYxdjkwMHozN3djNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7bu3XilJ5BOiSGic/giphy.gif";
+    loadingImg.style.display = "block";
+    loadingImg.style.margin = "20px auto"
 
+    setTimeout(() => { loadingImg.style.display = "none"; }, 1200);
 
-    fetch("/login", {
+    const res = await fetch("/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_email: user_email, user_pass: user_password })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.value == false) {
-            input_email.value = "";
-            decision.innerHTML = "Unable to authenticate user.";
-            decision.style.color ="red";
-            decision_pass.value ="";
-        }else{
-            loginForm.reset();
-            window.location.href = "/index";
-
-        }
+        body: JSON.stringify({ user_email, user_pass })
     });
-})
 
-signup.addEventListener("click", ()=>{
-    const first_name = prompt("What is your first name ");
-    const last_name = prompt("Wha is your last name");
-    
-    let email_address;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
 
-    do {
-        email_address = prompt("Enter your email:");
-        if (!emailRegex.test(email_address)) {
-            alert("Invalid email, please try again.");
-        }
-    } while (!emailRegex.test(email_address));
+    if (data.value === false) {
+        statusMsg.innerHTML = "Unable to authenticate user.";
+        statusMsg.style.color = "red";
+        return;
+    }
 
-    const account_password = prompt("Please enter a password for this account");
-    alert("Account setup is complete.");
+    loginForm.reset();
+    document.getElementById("id01").style.display = "none";
 
-    const registration = {"fname": first_name, "lname": last_name, "email": email_address, "password": account_password};
-    send_to_register(registration);
+    if (data.redirect) {
+        window.location.href = data.redirect;
+    }
+});
 
-})
 
-function send_to_register(registration){
+signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        fetch("/signup", {
+    const fname = signupForm.querySelector("input[name='fname']").value;
+    const lname = signupForm.querySelector("input[name='lname']").value;
+    const email = signupForm.querySelector("input[name='email']").value;
+    const psw   = signupForm.querySelector("input[name='psw']").value;
+
+    const registration = {
+        fname, lname, email, password: psw
+    };
+
+    const res = await fetch("/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ registration})
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.values == false) {
-            input_email.value = "";
-            decision.innerHTML = "Unable to register  user.";
-            decision.style.color ="red";
-            decision_pass.value ="";
-        }else{
-            decision.innerHTML = "User registration successful";
-            decision.style.color ="green";
-            decision_pass.value ="";
-
-        }
+        body: JSON.stringify({ registration })
     });
-    
-}
+
+    const data = await res.json();
+    console.log("SIGNUP RESPONSE:", data);
+
+    if (!data.values) {
+        statusMsg.innerHTML = "Unable to register user.";
+        statusMsg.style.color = "red";
+        return;
+    }
+    statusMsg.style.margin = "20px auto";
+    statusMsg.innerHTML = "User registration successful!";
+    statusMsg.style.color = "green";
+    signupForm.reset();
+    document.getElementById("id02").style.display = "none";
+});
