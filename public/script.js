@@ -45,14 +45,6 @@ form.addEventListener("submit", function(event) {
 });
 
 
-
-
-
-//Script for the Websocket and update of prices.
-
-
-
-// 1. Select all price elements
 const prices = {
   "BTC-USD": document.querySelector(".BTC-price"),
   "ETH-USD": document.querySelector(".ETH-price"),
@@ -66,7 +58,7 @@ const prices = {
   "USDT-USD": document.querySelector(".USDT-price")
 };
 
-// 2. Select all volume elements
+// Volume DOM elements
 const volume = {
   "BTC-USD": document.querySelector(".BTC-vol"),
   "ETH-USD": document.querySelector(".ETH-vol"),
@@ -80,8 +72,8 @@ const volume = {
   "USDT-USD": document.querySelector(".USDT-vol")
 };
 
-// 3. Store latest values
-var latestPrices = {
+// Latest price data
+let latestPrices = {
   "BTC-USD": null,
   "ETH-USD": null,
   "BNB-USD": null,
@@ -94,6 +86,7 @@ var latestPrices = {
   "USDT-USD": null
 };
 
+// Latest volume data
 let latestVolume = {
   "BTC-USD": null,
   "ETH-USD": null,
@@ -107,66 +100,49 @@ let latestVolume = {
   "USDT-USD": null
 };
 
-// 4. WebSocket connection
+// Coinbase WebSocket
 const ws = new WebSocket("wss://ws-feed.exchange.coinbase.com");
 
 ws.onopen = () => {
   ws.send(JSON.stringify({
     type: "subscribe",
     channels: [
-      { name: "ticker", product_ids: Object.keys(latestPrices) }
+      {
+        name: "ticker",
+        product_ids: Object.keys(latestPrices)
+      }
     ]
   }));
 };
 
-// 5. Update live values from WebSocket
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
 
   if (data.type === "ticker" && data.product_id in latestPrices) {
-    latestPrices[data.product_id] = data.price;
-    latestVolume[data.product_id] = data.volume_24h;
+    latestPrices[data.product_id] = Number(data.price);
+    latestVolume[data.product_id] = Number(data.volume_24h);
   }
 };
 
-// 6. One interval for updating ALL UI
+// Update UI every 100ms
 setInterval(() => {
 
-  // A. Update homepage: prices & volumes
-  for (const productId in latestPrices) {
+  for (const coin in latestPrices) {
 
-    // Update price
-    const priceValue = latestPrices[productId];
-    if (priceValue) {
-      const priceElement = prices[productId];
-      if (priceElement) {
-        priceElement.innerHTML = "$" + Number(priceValue).toFixed(6);
+    // PRICE update
+    if (latestPrices[coin] !== null) {
+      if (prices[coin]) {
+        prices[coin].innerHTML = "$" + latestPrices[coin].toFixed(6);
       }
     }
 
-    // Update volume
-    const volumeValue = latestVolume[productId];
-    if (volumeValue) {
-      const volumeElement = volume[productId];
-      if (volumeElement) {
-        volumeElement.innerHTML = Number(volumeValue).toLocaleString();
+    // VOLUME update
+    if (latestVolume[coin] !== null) {
+      if (volume[coin]) {
+        volume[coin].innerHTML = latestVolume[coin].toLocaleString();
       }
     }
   }
 
-  // B. Update portfolio page prices
-  for (const symbol in symbolMap) {
-    const productId = symbolMap[symbol];  // e.g., "BTC-USD"
-    const currentPrice = latestPrices[productId];
-
-    if (!currentPrice) continue;
-
-    const portfolioElement = document.querySelector(".holding-price-" + symbol);
-
-    if (portfolioElement) {
-      portfolioElement.innerHTML = "$" + Number(currentPrice).toFixed(6);
-    }
-  }
-
-}, 100);  // refresh rate 10 times/sec
+}, 100);
 
