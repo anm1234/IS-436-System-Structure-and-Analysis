@@ -67,8 +67,8 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
   "theme": "default",
   "themeVariables": {
     "pie1": "#FFC4C4",
-    "pie2": "#2C3AF7",
-    "pie3": "#DB0909"
+    "pie2": "#A2A4CD",
+    "pie3": "#644242"
   }
 }}%%
 pie showData
