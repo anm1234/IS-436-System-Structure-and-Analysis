@@ -62,13 +62,13 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 | 6️⃣ | QA & Testing | Validates, debugs, and refines system |
 
 ---
-```mermaid
 %%{init: {
   "theme": "default",
   "themeVariables": {
     "pie1": "#FFC4C4",
     "pie2": "#A2A4CD",
-    "pie3": "#644242"
+    "pie3": "#644242",
+    "textColor": "#000000"
   }
 }}%%
 pie showData
@@ -76,7 +76,7 @@ pie showData
     "Completed (85%)" : 85
     "Balance Verification & Update (10%)" : 10
     "Security Enhancement & Frontend Changes (5%)" : 5
-```
+
 ---
 
 ## 🚀 Setup & Run
