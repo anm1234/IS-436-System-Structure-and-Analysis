@@ -64,7 +64,7 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 ---
 
 ```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': {
+%%{init: {'theme': 'default', 'themeVariables': {
     'pie1': '#FFC4C4',   /* Gold Yellow */
     'pie2': '#2C3AF7',   /* Crypto Blue */
     'pie3': '#DB0909'    /* Alert Red */
