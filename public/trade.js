@@ -60,3 +60,12 @@ selection.addEventListener("change", updateUI);
 
 // User types amount → update
 amountInput.addEventListener("input", updateUI);
+
+
+const disply_decision = document.querySelector(".show-decision");
+const get_decision = document.querySelector(".trading-decision");
+
+get_decision.addEventListener("change",()=>{
+  disply_decision.innerHTML= (`You selected to ${get_decision.value}`)
+
+})

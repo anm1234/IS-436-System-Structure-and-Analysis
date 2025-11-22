@@ -157,10 +157,15 @@ hr{
     margin-top: 0px;;
 }
 
+label, .show-decision{
+    color:white;
+    margin:5px;
+}
 
-.trading-options button {
-    display: inline-flex;
-    gap: 30px;
+
+.trading-options{
+    display:flex;
+    gap: auto;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -169,9 +174,15 @@ hr{
     transition: 0.3s;
 }
 
+.trading-decision{
+    border-radius: 25px;
+}
+
 .trading-buy {
     background-color: #00c896;
     color: black;
+    width:20px;
+    height:20px;
 }
 
 .trading-sell {

@@ -21,30 +21,53 @@
             </ul>
         </nav>
         <hr>
-
         <h1>Let's Trade</h1>
-        <form  class="trading" action ="/submittrade" method="post">
-            <div class="trading-balance"><p>$ <%=locals.trading_options.balance %></p></div>
-            <div class="trading-options">
-                <button class="trading-buy">Buy</button>
-                <button class="trading-sell">Sell</button>
+
+        <form class="trading" action="/submittrade" method="post">
+
+            <div class="trading-balance">
+                <p>$ <%= locals.trading_options.balance %></p>
             </div>
-            
-            <select class = "selection">
-                <option selected></option>
+
+            <p class="show-decision"></p>
+
+            <div class="trading-options">
+                <label for="order_type"> Buy/Sell </label>
+                <select name="order_type" class="trading-decision" required>
+                    <option value="Buy">Buy</option>
+                    <option value="Sell">Sell</option>
+                </select>
+            </div>
+
+    
+            <select class="selection" name="crypto" required>
+                <option value="" selected></option>
                 <option value="BTC-USD">BTC</option>
                 <option value="ETH-USD">ETH</option>
                 <option value="XRP-USD">XRP</option>
             </select>
             <br>
-            <input type="number" class="trading-amount" placeholder="Enter the amount">
-            <input type="number" class="trading-price" placeholder="Current Price">
+
+            <input type="number" 
+                class="trading-amount" 
+                name="amount" 
+                placeholder="Enter the amount"
+                required>
+
+            <input type="number" 
+                class="trading-price" 
+                name="price" 
+                placeholder="Current Price"
+                step="0.000001"
+                required>
+
             <p class="trading-value">Total Value: </p>
 
             <button type="submit" class="trading-submit">Submit</button>
-
-
         </form>
+
+
+        
         <script src="trade.js"></script>
 
         

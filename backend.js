@@ -98,6 +98,7 @@ app.get("/dashboard", (req,res)=>{
 app.get("/trade", (req,res)=>{
   const session_exist = session_checker(req);
   if (session_exist){
+    console.log(`Switched to trade`)
     //let trading_options = collect_crypto_data();
     let trading_options = req.session.user.data[0];
     console.log(trading_options);
@@ -105,6 +106,10 @@ app.get("/trade", (req,res)=>{
   }else{
     res.sendFile( __dirname +"/index.html");
   }
+})
+
+app.post('/submittrade',(req,res)=>{
+  console.log(req.body);
 })
 
 app.get("/portfolio",(req,res)=>{
