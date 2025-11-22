@@ -4,7 +4,7 @@
 
 **An educational crypto trading simulator with AI-powered insights**
 
----
+--- 
 
 ## 📘 Overview
 
@@ -74,9 +74,9 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 }}%%
 pie showData
     title Project Progress
-    "Completed (85%)" : 85
+    "Completed (87.5%)" : 87.5
     "Balance Verification & Update (10%)" : 10
-    "Security Enhancement & Frontend Changes (5%)" : 5
+    "Security Enhancement & Frontend Changes (2.5%)" : 5
 ```
 ---
 
