@@ -75,9 +75,10 @@ signupForm.addEventListener("submit", async (e) => {
         statusMsg.style.color = "red";
         return;
     }
-    statusMsg.style.margin = "20px auto";
-    statusMsg.innerHTML = "User registration successful!";
+    statusMsg.style.textAlign = "center";
+    statusMsg.innerHTML = "User registration successful!";  
     statusMsg.style.color = "green";
+    statusMsg.innerHTML = "";
     signupForm.reset();
     document.getElementById("id02").style.display = "none";
 });

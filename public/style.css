@@ -44,6 +44,27 @@ button:hover {
   background-color: #f44336;
 }
 
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Fix email + password input fields */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+
+
 /* Center the image and position the close button */
 .imgcontainer {
   text-align: center;
