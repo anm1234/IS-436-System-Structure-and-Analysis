@@ -4,7 +4,7 @@
 
 **An educational crypto trading simulator with AI-powered insights**
 
----
+--- 
 
 ## 📘 Overview
 
