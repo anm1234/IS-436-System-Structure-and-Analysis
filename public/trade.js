@@ -46,7 +46,7 @@ const totalValue = document.querySelector(".trading-value");
 
 // Update UI ONLY when user interacts
 function updateUI() {
-  const coin = selection.value;
+  const coin = selection.options[selection.selectedIndex].className;
   const price = prices[coin];
   const amount = parseFloat(amountInput.value);
 

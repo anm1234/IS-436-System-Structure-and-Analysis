@@ -109,7 +109,31 @@ app.get("/trade", (req,res)=>{
 })
 
 app.post('/submittrade',(req,res)=>{
-  console.log(req.body);
+  const order = req.body;
+  const user_status = req.session.user.data[0];
+  const user_status_holding = req.session.user.holding;
+  console.log(order);
+  console.log(user_status);
+  console.log(user_status_holding);
+  if (order.order_type === "Buy"){
+    if(order.price > user_status.balance){
+      console.log(`You cant afford it`)
+    }else{
+      console.log("Write a function for the transaction");
+    }
+  }else if(order.order_type === "Sell"){
+    const coin = user_status_holding.find(item => item.asset_name === order.crypto);
+    console.log("Coin is ", coin);
+    if (coin) {
+      if(Number(order.amount) > coin.asset_amount){
+        console.log(`You dont have ${order.amount}, ${order.crypto}`)
+      }else{
+        console.log(`Write the function for the transaction`)
+      }
+    }else {
+      console.log(`User does not have the coin`);
+    }
+  }
 })
 
 app.get("/portfolio",(req,res)=>{
