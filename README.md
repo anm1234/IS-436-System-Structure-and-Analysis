@@ -32,7 +32,7 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 | Frontend | HTML, CSS, JavaScript |
 | Backend | Node.js, Express | Sessions
 | Database | Supabase |
-| AI Integration | Google Gemini API | Currently Unavailable
+| AI Integration | Google Gemini API | Currently Unavailable |
 | Version Control | GitHub |
 | Development Process | Agile (Scrum) |
 
