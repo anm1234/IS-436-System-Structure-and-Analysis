@@ -39,6 +39,8 @@ ws.onmessage = (event) => {
   }
 };
 
+const place_order = document.querySelector(".trading");//This one is when the form get submitted
+
 const selection = document.querySelector(".selection");
 const amountInput = document.querySelector(".trading-amount");
 const selectedPrice = document.querySelector(".trading-price");
@@ -69,3 +71,28 @@ get_decision.addEventListener("change",()=>{
   disply_decision.innerHTML= (`You selected to ${get_decision.value}`)
 
 })
+
+
+
+place_order.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(place_order);
+     const encoded = new URLSearchParams(formData);
+
+    const res = await fetch("/submittrade", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encoded
+    });
+
+    const data = await res.json();
+
+    if (data.balance === true) {
+        alert("Balance True");
+        window.location.reload();
+    } else {
+        alert("Balance False");
+        window.location.reload();
+    }
+});

@@ -115,11 +115,14 @@ app.post('/submittrade',(req,res)=>{
   console.log(order);
   console.log(user_status);
   console.log(user_status_holding);
+
   if (order.order_type === "Buy"){
     if(order.price > user_status.balance){
-      console.log(`You cant afford it`)
+      console.log(`You cant afford it`);
+      res.json({balance: false})
     }else{
       console.log("Write a function for the transaction");
+      res.json({balance:true});
     }
   }else if(order.order_type === "Sell"){
     const coin = user_status_holding.find(item => item.asset_name === order.crypto);
@@ -127,11 +130,14 @@ app.post('/submittrade',(req,res)=>{
     if (coin) {
       if(Number(order.amount) > coin.asset_amount){
         console.log(`You dont have ${order.amount}, ${order.crypto}`)
+        res.json({balance: false, coins: true});
       }else{
-        console.log(`Write the function for the transaction`)
+        console.log(`Write the function for the transaction`);
+        res.json({balance: true, coins: true});
       }
     }else {
       console.log(`User does not have the coin`);
+      res.json({balance:false, coin: false});
     }
   }
 })
