@@ -17,11 +17,10 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 ## 🎯 Core Features
 
 - 💰 **Fake currency trading** – buy/sell crypto using simulated funds  
-- 📊 **Real-time price tracking** via public APIs  
+- 📊 **Real-time price tracking** via public API and Websockets 
 - 📈 **Portfolio management** – view holdings, transaction history, and wallet balance  
-- 🤖 **AI-powered analysis** – Gemini LLM offers trend predictions and explanations  
-- 🧑‍🤝‍🧑 **Leaderboard** for classroom or competitive learning  
-- 🔒 **Secure backend** – Node.js + Express + MySQL with authentication
+- 🤖 **AI-powered analysis** – Gemini LLM offers trend predictions and explanations (Upcoming)  
+- 🔒 **Secure backend** – Node.js + Express + Sessions + Supabase authentication
 
 ---
 
