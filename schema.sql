@@ -9,13 +9,16 @@
 
 -- USERS TABLE
 
-CREATE TABLE IF NOT EXISTS public.users.     (
+CREATE TABLE IF NOT EXISTS public.users.(
   id SERIAL PRIMARY KEY,
   email VARCHAR,
   password VARCHAR,
   fname VARCHAR,
   lname VARCHAR,
   balance INTEGER
+
+
+  
 );
 
 -- HOLDING TABLE
