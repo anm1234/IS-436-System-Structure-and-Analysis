@@ -278,7 +278,13 @@ async function user_asset(id){
   }
 }
 
+async function update_buy(){
 
+}
+
+async function update_sell(){
+
+}
 
 
 
