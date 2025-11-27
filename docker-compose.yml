@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  cryptoconnect-backend:
+    build: .
+    container_name: cryptoconnect-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_KEY: ${SUPABASE_KEY}
+      NODE_ENV: production
+      PORT: 3000
+    command: ["node", "backend.js"]
