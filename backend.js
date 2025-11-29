@@ -161,7 +161,7 @@ app.get("/logout", (req,res)=>{
   res.sendFile( __dirname +"/index.html");
 })
 
-app.listen(port, () =>{
+app.listen(port,() =>{
     console.log(`Server is live on port ${port}`);
 });
 
