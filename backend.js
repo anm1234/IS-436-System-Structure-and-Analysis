@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended : true}));
@@ -122,6 +122,8 @@ app.post('/submittrade',(req,res)=>{
       res.json({balance: false})
     }else{
       console.log("Write a function for the transaction");
+      update_buy(order,user_status,user_status_holding);
+      req.session.user.data[0].balance -=order.price;
       res.json({balance:true});
     }
   }else if(order.order_type === "Sell"){
@@ -133,6 +135,8 @@ app.post('/submittrade',(req,res)=>{
         res.json({balance: false, coins: true});
       }else{
         console.log(`Write the function for the transaction`);
+        update_sell(order,user_status,user_status_holding);
+        req.session.user.data[0].balance +=order.price;
         res.json({balance: true, coins: true});
       }
     }else {
@@ -278,13 +282,89 @@ async function user_asset(id){
   }
 }
 
-async function update_buy(){
 
+async function update_balance(userId, newBalance) {
+  const { error } = await supabase
+    .from("users")
+    .update({ balance: newBalance }) 
+    .eq("id", userId);              
+
+  if (error) {
+    console.log("Error updating balance:", error);
+  } else {
+    console.log(`Balance updated in DB for user ${userId}: ${newBalance}`);
+  }
 }
 
-async function update_sell(){
+async function update_buy(order, user_status, user_status_holding) {
+  console.log("BUY operation started");
 
+  const userId = user_status.id;
+  const assetName = order.crypto;
+  const amount = Number(order.amount);
+  const price = Number(order.price);
+  const totalCost = amount * price;
+
+  if (user_status.balance < totalCost) {
+    console.log("Not enough balance");
+    return;
+  }
+  const existing = user_status_holding.find(h => h.asset_name === assetName);
+
+  if (existing) {
+    const newAmount = Number(existing.asset_amount) + amount;
+
+    await supabase
+      .from("Holding")
+      .update({ asset_amount: newAmount })
+      .eq("user_id", userId)
+      .eq("asset_name", assetName);
+
+    console.log(`✔ Updated holding for ${assetName}: new amount = ${newAmount}`);
+  } else {
+
+    await supabase
+      .from("Holding")
+      .insert({
+        user_id: userId,
+        asset_name: assetName,
+        asset_amount: amount,
+      });
+
+    console.log(`✔ Inserted new holding for ${assetName}: amount = ${amount}`);
+  }
+
+  const newBalance = user_status.balance - totalCost;
+  await update_balance(userId, newBalance);
+
+  console.log("BUY Completed");
 }
 
 
+async function update_sell(order, user_status, user_status_holding) {
+  console.log("SELL operation started");
 
+  const userId = user_status.id;
+  const assetName = order.crypto;
+  const amount = Number(order.amount);
+  const price = Number(order.price);
+  const totalValue = amount * price;
+
+  const existing = user_status_holding.find(h => h.asset_name === assetName);
+  const newAmount = Number(existing.asset_amount) - amount;
+
+  
+  await supabase
+    .from("Holding")
+    .update({ asset_amount: newAmount })
+    .eq("user_id", userId)
+    .eq("asset_name", assetName);
+
+  console.log(`✔ Updated holding after SELL: ${assetName} = ${newAmount}`);
+
+
+  const newBalance = user_status.balance + totalValue;
+  await update_balance(userId, newBalance);
+
+  console.log("SELL Completed");
+}

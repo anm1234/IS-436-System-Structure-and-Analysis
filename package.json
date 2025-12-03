@@ -7,6 +7,7 @@
     "@supabase/supabase-js": "^2.80.0",
     "body-parser": "^1.20.2",
     "dotenv": "^17.2.3",
+    "easyinvoice": "^3.0.47",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-session": "^1.18.2",

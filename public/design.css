@@ -151,10 +151,16 @@ hr{
     padding: 20px;
 }
 .trading .trading-balance{
-    background-color: green;
-    width:40px;
-    margin-left:90%;
-    margin-top: 0px;;
+    background-color: grey;
+    width: fit-content;
+    height: fit-content;
+    margin-left:80%;
+    margin-top: 1px;
+}
+.trading .trading-balance p{
+    width:fit-content;
+    height: fit-content;
+    padding:5px;
 }
 
 label, .show-decision{
