@@ -136,7 +136,7 @@ app.post('/submittrade',(req,res)=>{
       }else{
         console.log(`Write the function for the transaction`);
         update_sell(order,user_status,user_status_holding);
-        req.session.user.data[0].balance +=order.price;
+        req.session.user.data[0].balance += Number(order.price);
         res.json({balance: true, coins: true});
       }
     }else {
