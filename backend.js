@@ -108,43 +108,70 @@ app.get("/trade", (req,res)=>{
   }
 })
 
-app.post('/submittrade',(req,res)=>{
+app.post('/submittrade', async (req, res) => {
   const order = req.body;
   const user_status = req.session.user.data[0];
   const user_status_holding = req.session.user.holding;
-  console.log(order);
-  console.log(user_status);
-  console.log(user_status_holding);
 
-  if (order.order_type === "Buy"){
-    if(order.price > user_status.balance){
-      console.log(`You cant afford it`);
-      res.json({balance: false})
-    }else{
-      console.log("Write a function for the transaction");
-      update_buy(order,user_status,user_status_holding);
-      req.session.user.data[0].balance -=order.price;
-      res.json({balance:true});
+  const amount = Number(order.amount);
+  const price = Number(order.price);
+  const total = amount * price;
+
+  //BUY LOGIC
+  if (order.order_type === "Buy") {
+
+    if (total > user_status.balance) {
+      console.log("You can't afford it");
+      return res.json({ balance: false });
     }
-  }else if(order.order_type === "Sell"){
-    const coin = user_status_holding.find(item => item.asset_name === order.crypto);
-    console.log("Coin is ", coin);
-    if (coin) {
-      if(Number(order.amount) > coin.asset_amount){
-        console.log(`You dont have ${order.amount}, ${order.crypto}`)
-        res.json({balance: false, coins: true});
-      }else{
-        console.log(`Write the function for the transaction`);
-        update_sell(order,user_status,user_status_holding);
-        req.session.user.data[0].balance += Number(order.price);
-        res.json({balance: true, coins: true});
-      }
-    }else {
-      console.log(`User does not have the coin`);
-      res.json({balance:false, coin: false});
+
+    //UPDATE DATABASE
+    await update_buy(order, user_status, user_status_holding);
+
+    user_status.balance -= total;
+
+    //SESSION UPDATE (HOLDINGS)
+    let asset = user_status_holding.find(h => h.asset_name === order.crypto);
+
+    if (asset) {
+      asset.asset_amount += amount;
+    } else {
+      user_status_holding.push({
+        asset_name: order.crypto,
+        asset_amount: amount
+      });
     }
+
+    return res.json({ balance: true });
   }
-})
+
+  // SELL LOGIC
+  if (order.order_type === "Sell") {
+
+    const coin = user_status_holding.find(h => h.asset_name === order.crypto);
+
+    if (!coin) {
+      return res.json({ balance: false, coin: false });
+    }
+
+    if (amount > coin.asset_amount) {
+      return res.json({ balance: false, coins: true });
+    }
+ 
+    await update_sell(order, user_status, user_status_holding);
+   
+    user_status.balance += total;
+   
+    coin.asset_amount -= amount;
+    
+    if (coin.asset_amount <= 0) {
+      req.session.user.holding = user_status_holding.filter(
+        h => h.asset_name !== order.crypto
+      );
+    }
+    return res.json({ balance: true, coins: true });
+  }
+});
 
 app.get("/portfolio",(req,res)=>{
   const session_exist = session_checker(req);
@@ -360,7 +387,7 @@ async function update_sell(order, user_status, user_status_holding) {
     .eq("user_id", userId)
     .eq("asset_name", assetName);
 
-  console.log(`✔ Updated holding after SELL: ${assetName} = ${newAmount}`);
+  console.log(`Updated holding after SELL: ${assetName} = ${newAmount}`);
 
 
   const newBalance = user_status.balance + totalValue;

@@ -3,52 +3,71 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "design.css"></link>
+    <link rel="stylesheet" href="design.css">
     <title>CryptoConnect</title>
   </head>
   <body>
-    
-      <h1>CryptoConnect</h1>
-      <hr>
-      <nav class="navbar">
-          <ul class="nav-links">
-              <li><a href="/dashboard">Cryptoconnect</a></li>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/portfolio">Portfolio</a></li>
-              <li><a href="/trade">Trade</a></li>
-              <li><a href="/profile">Profile</a></li>
-              <li><a href="/logout">Logout</a></li>
-          </ul>
-      </nav>
-      <hr>
 
-      <h1>My Porfolio</h1>
-      
-      <nav class="portfolio-bar">
-        <ul class="portfolio-bar-list">
-          <li>Coin</li> 
-          <li>Quantity</li> 
-          <li>Current Price </li>
-          <li>Total Value</li>
-          <li>P/L (%)</li>
+    <h1>CryptoConnect</h1>
+    <hr>
+
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="/dashboard">Cryptoconnect</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/portfolio">Portfolio</a></li>
+        <li><a href="/trade">Trade</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+
+    <hr>
+
+    <h1>My Portfolio</h1>
+
+    <nav class="portfolio-bar">
+      <ul class="portfolio-bar-list">
+        <li>Coin</li>
+        <li>Quantity</li>
+        <li>Current Price</li>
+        <li>Total Value</li>
+        <li>P/L (%)</li>
+      </ul>
+    </nav>
+
+    <nav class="portfolio-holding">
+      <% if (holding_info && holding_info.length > 0) { %>
+        <% holding_info.forEach(hold => { 
+             const coin = hold.asset_name.trim().toUpperCase() + "-USD";
+        %>
+
+        <ul class="portfolio-holding-list">
+          <!-- Show BTC on screen -->
+          <li class="coin"><%= hold.asset_name %></li>
+
+          <!-- Quantity -->
+          <li class="amount amount-<%= coin %>"><%= hold.asset_amount %></li>
+
+          <!-- Current Price -->
+          <li class="price price-<%= coin %>">--</li>
+
+          <!-- Total Value -->
+          <li class="total total-<%= coin %>">--</li>
+
+          <!-- P/L (%) Placeholder -->
+          <li class="pl pl-<%= coin %>">--</li>
         </ul>
-      </nav>
-      
-      <nav class="portfolio-holding">
-        <% if (locals.holding_info && locals.holding_info.length > 0) { %>
-          <% for (let i = 0; i < locals.holding_info.length; i++) { %>
-            <ul class="portfolio-holding-list">
-              <li><%= locals.holding_info[i].asset_name %></li>
-              <li><%= locals.holding_info[i].asset_amount %></li>
-              <li>--</li> <!-- placeholder for current price -->
-              <li>--</li> <!-- placeholder for total value -->
-              <li>--</li> <!-- placeholder for P/L -->
-            </ul>
-          <% } %>
-        <% } %>
-      </nav>
-  </body>
-  <script src="script.js"></script>
 
+        <% }) %>
+      <% } %>
+    </nav>
+
+    <h2>Total Portfolio Value: <span id="portfolio-value">$0.00</span></h2>
+
+  </body>
+
+  <script src="script.js"></script>
+  <script src="/portfolio.js"></script>
 
 </html>

@@ -78,7 +78,7 @@ place_order.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const formData = new FormData(place_order);
-     const encoded = new URLSearchParams(formData);
+    const encoded = new URLSearchParams(formData);
 
     const res = await fetch("/submittrade", {
         method: "POST",
