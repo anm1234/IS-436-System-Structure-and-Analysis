@@ -391,7 +391,8 @@ async function update_sell(order, user_status, user_status_holding) {
 
 
   const newBalance = user_status.balance + totalValue;
-  await update_balance(userId, newBalance);
+  const fixedBalance = Number(newBalance.toFixed(2));
+  await update_balance(userId, fixedBalance);
 
   console.log("SELL Completed");
 }
