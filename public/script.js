@@ -132,7 +132,7 @@ setInterval(() => {
     // PRICE update
     if (latestPrices[coin] !== null) {
       if (prices[coin]) {
-        prices[coin].innerHTML = "$" + latestPrices[coin].toFixed(6);
+        prices[coin].innerHTML = "$" + latestPrices[coin].toFixed(1);
       }
     }
 
