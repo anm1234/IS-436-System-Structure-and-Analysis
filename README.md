@@ -42,8 +42,7 @@ The system also integrates an **LLM (Gemini)** to provide **AI-powered market in
 |------|------|
 | **Eman Hussien** | Project Manager |
 | **Sahil Mohammed** | Quality Assurance & Testing |
-| **Abel Negatu** | Backend Developer |
-| **Samuel Silva** | Frontend Developer |
+| **Abel Negatu** | Backend Developer, Frontend Developer |
 | **Mareisha Banga** | UI/UX Designer |
 | **Ryan Rich** | Database Manager |
 
